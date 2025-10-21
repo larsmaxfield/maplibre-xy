@@ -42,8 +42,11 @@
 </table>
 
 <script>
+    const wayOut = -999;
+
     const map = new maplibregl.Map({
         container: 'map',
+        zoom: wayOut,
         renderWorldCopies: false,
         transformConstrain: underzoomTransformConstrain,
         // transformConstrain: identityTransformConstrain,
@@ -102,7 +105,7 @@
         const extendScale = parseFloat(document.getElementById('extend-scale-slider').value);
         _extendScalePercent = extendScale;
         document.getElementById('extend-scale-label').textContent = `Extend scale (${zeroPad(extendScale, 2)}%)`;
-        map.setZoom(Number.MIN_VALUE);
+        map.setZoom(wayOut);
     }
     function setExtendPanFromUi() {
         const extendPan = parseFloat(document.getElementById('extend-pan-slider').value);
@@ -113,7 +116,7 @@
     function selectMaxBoundsFromUi() {
         const option = document.getElementById('max-bounds-select').value;
         map.setMaxBounds(bounds_options[option].bounds);
-        map.setZoom(Number.MIN_VALUE);
+        map.setZoom(wayOut);
     }
 
     map.on('load', () => {
