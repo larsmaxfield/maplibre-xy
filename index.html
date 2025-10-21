@@ -31,12 +31,12 @@
 <table id='listing-group-bottom-left' class='listing-group'>
     <tr><td><label for='extend-viewport-bounds'>Extend viewport bounds</label></td><td><input type='checkbox' id='extend-viewport-bounds' checked/></td></tr>
     <tr><td><label for='extend-scale-slider' id='extend-scale-label'>Extend scale</label></td><td><input type='range' id='extend-scale-slider' min='0' max='100' step='10' value='90' /></td></tr>
-    <tr><td><label for='extend-pan-slider' id='extend-pan-label'>Extend pan</label></td><td><input type='range' id='extend-pan-slider' min='0' max='100' step='10' value='10' /></td></tr>
+    <tr><td><label for='extend-pan-slider' id='extend-pan-label'>Extend pan</label></td><td><input type='range' id='extend-pan-slider' min='0' max='100' step='10' value='20' /></td></tr>
     <tr><td><label for='max-bounds-select'>maxBounds</label></td>
         <td><select name="max-bounds-select" id="max-bounds-select">
             <option value="undefined">World (undefined)</option>
-            <option value="wide">NYC (wide)</option>
-            <option value="tall">Amsterdam (tall)</option>
+            <option value="wide">Amazon River (wide)</option>
+            <option value="tall">Lake Michigan (tall)</option>
         </select></td>
     </tr>
 </table>
@@ -70,22 +70,38 @@
             ]
         },
     });
+
+    // Lake Michigan
+    const t_north = 46.11;
+    const t_east = -84.72;
+    const t_south = 41.60;
+    const t_west = -88.05;
+    const t_bounds = [[t_west, t_south], [t_east, t_north]];
+    const t_center = [(t_west + t_east) / 2, (t_north + t_south) / 2]
     
-    // New York, New York
-    const w_north = 40.78;
-    const w_east = -73.81;
-    const w_south = 40.68;
-    const w_west = -74.15;
+    // Amazon River
+    const w_north = 0.71;
+    const w_east = -50.09;
+    const w_south = -5.10;
+    const w_west = -75.10;
     const w_bounds = [[w_west, w_south], [w_east, w_north]];
     const w_center = [(w_west + w_east) / 2, (w_north + w_south) / 2]
 
-    // Amsterdam, Netherlands
-    const t_north = 52.3676 + 0.5;
-    const t_east = 4.9041 + 0.25;
-    const t_south = 52.3676 - 0.5;
-    const t_west = 4.9041 - 0.25;
-    const t_bounds = [[t_west, t_south], [t_east, t_north]];
-    const t_center = [(t_west + t_east) / 2, (t_north + t_south) / 2]
+    // // New York, New York
+    // const w_north = 40.78;
+    // const w_east = -73.81;
+    // const w_south = 40.68;
+    // const w_west = -74.15;
+    // const w_bounds = [[w_west, w_south], [w_east, w_north]];
+    // const w_center = [(w_west + w_east) / 2, (w_north + w_south) / 2]
+
+    // // Amsterdam, Netherlands
+    // const t_north = 52.3676 + 0.5;
+    // const t_east = 4.9041 + 0.25;
+    // const t_south = 52.3676 - 0.5;
+    // const t_west = 4.9041 - 0.25;
+    // const t_bounds = [[t_west, t_south], [t_east, t_north]];
+    // const t_center = [(t_west + t_east) / 2, (t_north + t_south) / 2]
 
     const bounds_options = {
         "undefined": {
