@@ -20,6 +20,7 @@ export class Underzoom {
      */
     transformConstrain;
 
+    // Helper methods and field from maplibre-gl-js, Copyright (c) 2023, MapLibre contributors
     static #MAX_VALID_LATITUDE = 85.051129;
 
     static #mercatorYfromLat(lat) {
