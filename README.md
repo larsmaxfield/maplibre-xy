@@ -46,7 +46,7 @@ For a simple HTML page, this is something like:
 
 ### Underzoom
 
-Let users see the entire bounded area within defined limits of scale and pan with `Underzoom.transformConstrain`. Useful for responsibly showing the whole map when `renderWorldCopies=false`.
+Let users see the entire bounded area within defined limits by passing `Underzoom.transformConstrain` to the Map constructor's `transformConstrain` option:
 
 ```js
 import { Underzoom } from './src/index.js';  // or './src/underzoom.js'
@@ -57,6 +57,8 @@ const map = new maplibregl.Map({
     transformConstrain: myUnderzoom.transformConstrain,
     ...
 ```
+
+Especially useful for responsibly showing the whole map when `renderWorldCopies=false`.
 
 #### Customize
 
