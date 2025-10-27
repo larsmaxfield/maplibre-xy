@@ -2,7 +2,19 @@
 
 Handy functions for <a href=https://github.com/maplibre/maplibre-gl-js>maplibre-gl-js</a> to improve flat single-copy maps, 'simple' maps, and non-maps like high-resolution images.
 
-[Install](#install) by pointing to the repo's `/src/index.js` or (soon) with NPM.
+[Install](#install) with NPM:
+
+```bash
+npm install maplibre-xy
+```
+
+Or import modules as needed to your script from unpkg or locally from the repo's `/src`:
+
+```js
+import { Underzoom } from 'https://unpkg.com/maplibre-xy';
+// or
+import { Underzoom } from './src/index.js';
+```
 
 [Features](https://larsmaxfield.com/maplibre-xy/) with code examples:
 
@@ -14,29 +26,34 @@ Handy functions for <a href=https://github.com/maplibre/maplibre-gl-js>maplibre-
 
 ## Install
 
-I'm working on an NPM package.
+You can access the modules in a couple ways.
 
-For now, clone the repo or simply copy the `/src` folder contents. Use `/src/index.js` to access all features.
+### NPM
 
-Or just copy individual modules (like`/src/underzoom.js`) if you need just that.
-
-For a simple HTML page, this is something like:
-
-```html
-<!DOCTYPE html>
-...
-<head>
-    ...
-    <script src='https://unpkg.com/maplibre-gl@5.10.0/dist/maplibre-gl.js'></script>
-</head>
-<body>
-    <script type="module">
-        import { Underzoom } from './src/index.js';  // or './src/underzoom.js'
-        ...
-    </script>
-</body>
-</html>
+```bash
+npm install maplibre-xy
 ```
+
+```js
+import { Underzoom } from 'maplibre-xy'
+```
+
+### unpkg
+
+```js
+import { Underzoom } from 'https://unpkg.com/maplibre-xy';
+```
+
+### Source
+
+You can also clone the repo or simply copy the `/src` folder contents:
+
+```js
+import { Underzoom } from './src/index.js';
+```
+
+Or just copy individual modules (like`/src/underzoom.js`) if you need just need those.
+
 
 ## Features
 
@@ -45,7 +62,9 @@ For a simple HTML page, this is something like:
 Let users see the entire bounded area within defined limits by passing `Underzoom.transformConstrain` to the Map constructor's `transformConstrain` option:
 
 ```js
-import { Underzoom } from './src/index.js';  // or './src/underzoom.js'
+import { Underzoom } from 'maplibre-xy';  // NPM
+// or
+import { Underzoom } from 'https://unpkg.com/maplibre-xy';  // unpkg
 
 const myUnderzoom = new Underzoom(maplibregl);  // Uses default limits
 
@@ -54,7 +73,7 @@ const map = new maplibregl.Map({
     ...
 ```
 
-Especially useful for responsibly showing the whole map when `renderWorldCopies=false`.
+This is especially useful for responsibly showing the whole map when `renderWorldCopies=false`.
 
 #### Customize
 
@@ -80,8 +99,6 @@ const myUnderzoom = new Underzoom(maplibregl, underzoomOptions);
 ```
 
 #### HTML example
-Assuming you have the `/src` folder available:
-
 ```html
 <!DOCTYPE html>
 <html lang='en'>
@@ -104,7 +121,7 @@ Assuming you have the `/src` folder available:
 <div id='map'></div>
 
 <script type="module">
-    import { Underzoom } from '../../src/index.js';  // or '../../src/underzoom.js'
+    import { Underzoom } from 'https://unpkg.com/maplibre-xy';
     
     const myUnderzoom = new Underzoom(maplibregl, { extendScale: 0.5, extendPan: 1.0 });
 
