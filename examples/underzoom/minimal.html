@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <title>Underzoom minimal example</title>
+    <meta property='og:description' content='Underzoom minimal example' />
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@5.10.0/dist/maplibre-gl.css' />
+    <script src='https://unpkg.com/maplibre-gl@5.10.0/dist/maplibre-gl.js'></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        html, body, #map { height: 100%; }
+    </style>
+</head>
+<body>
+<div id='map'></div>
+
+<script type="module">
+    import { Underzoom } from '../../src/index.js';  // or '../../src/underzoom.js'
+    
+    const myUnderzoom = new Underzoom(maplibregl, { extendScale: 0.5, extendPan: 1.0 });
+
+    const map = new maplibregl.Map({
+        container: 'map',
+        renderWorldCopies: false,
+        transformConstrain: myUnderzoom.transformConstrain,
+        style: {
+            version: 8,
+            sources: {
+                rgb: {
+                    type: 'raster',
+                    tiles: ['https://a.tile.openstreetmap.org/{z}/{x}/{y}.png'],
+                    tileSize: 256,
+                    attribution: '&copy; OpenStreetMap Contributors',
+                    maxzoom: 19
+                },
+            },
+            layers: [
+                {
+                    id: 'rgb',
+                    type: 'raster',
+                    source: 'rgb'
+                },
+            ]
+        },
+    });
+</script>
+</body>
+</html>
