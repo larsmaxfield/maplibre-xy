@@ -1,203 +1,82 @@
 <!DOCTYPE html>
 <html lang='en'>
 <head>
-    <title>Underzoom and overpan with custom map transform</title>
-    <meta property='og:description' content='Underzoom and overpan with a custom map transform' />
+    <title>maplibre-xy - Handy single-copy map functions</title>
+    <meta property='og:description' content="Handy functions for maplibre-gl-js to improve flat single-copy maps, 'simple' maps, and non-maps like high-resolution images"/>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' href='./src/maplibre-gl.css' />
-    <script src='./src/maplibre-gl.js'></script>
-    <script src='./src/maplibre-underzoom.js'></script>
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            background: repeating-conic-gradient(#000 0 25%, #444 0 50%) 50% / 32px 32px;
+            background-color: color-mix(in srgb, Canvas, CanvasText 2.5%);
+            color: color-mix(in srgb, CanvasText, Canvas 15%);
+            color-scheme: light dark;
         }
-        html, body, #map { height: 100%; }
-        .listing-group {
-            font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 4px;
+        .iframe-caption {
+            padding: 0;
+            margin: 0;
+        }
+        h1, h2 {
+            padding: 0;
+            margin: 0;
+        }
+        pre {
+            overflow-x: auto;
+            /* overflow: hidden; */
+            font-size: smaller;
         }
     </style>
 </head>
 <body>
-<div id='map'></div>
-<table id='listing-group-bottom-left' class='listing-group'>
-    <tr><td><label for='extend-viewport-bounds'>Extend viewport bounds</label></td><td><input type='checkbox' id='extend-viewport-bounds' checked/></td></tr>
-    <tr><td><label for='extend-scale-slider' id='extend-scale-label'>Extend scale</label></td><td><input type='range' id='extend-scale-slider' min='0' max='100' step='10' value='90' /></td></tr>
-    <tr><td><label for='extend-pan-slider' id='extend-pan-label'>Extend pan</label></td><td><input type='range' id='extend-pan-slider' min='0' max='100' step='10' value='20' /></td></tr>
-    <tr><td><label for='max-bounds-select'>maxBounds</label></td>
-        <td><select name="max-bounds-select" id="max-bounds-select">
-            <option value="undefined">World (undefined)</option>
-            <option value="wide">Amazon River (wide)</option>
-            <option value="tall">Lake Michigan (tall)</option>
-        </select></td>
-    </tr>
-</table>
+    <h1>
+        maplibre-xy
+    </h1>
+    <p>
+        Handy functions for maplibre-gl-js to improve flat single-copy maps, 'simple' maps, and non-maps like high-resolution images.
+    </p>
+    <p class="h-caption">
+        Source on <a href=https://github.com/larsmaxfield/maplibre-xy>GitHub</a>.
+    <p>
 
-<script>
-    const wayOut = -999;
+    <h2>
+        <a href="./examples/underzoom/">Underzoom</a>
+    </h2>
+    <iframe
+        id="underzoom"
+        title="Underzoom"
+        width="100%"
+        height="400"
+        src="./examples/underzoom/">
+    </iframe>
+    <p class="iframe-caption">View the entire bounded map by extending the zoom and pan with <code>Underzoom.transformConstrain</code>.</p>
+    <pre>
+    &#60;!DOCTYPE html&#62;
+    ...
+    &#60;head&#62;
+        ...
+        &#60;script src='https://unpkg.com/maplibre-gl@5.10.0/dist/maplibre-gl.js'&#62;&#60;/script&#62;
+        &#60;script src='./src/index.js'&#62;&#60;/script&#62;
+    &#60;/head&#62;
+    &#60;body&#62;
+        &#60;script type="module"&#62;
+            import { Underzoom } from './src/index.js';  // or './src/underzoom.js'
 
-    const map = new maplibregl.Map({
-        container: 'map',
-        zoom: wayOut,
-        renderWorldCopies: false,
-        transformConstrain: underzoomTransformConstrain,
-        // transformConstrain: identityTransformConstrain,
-        style: {
-            version: 8,
-            sources: {
-                rgb: {
-                    type: 'raster',
-                    tiles: ['https://a.tile.openstreetmap.org/{z}/{x}/{y}.png'],
-                    tileSize: 256,
-                    attribution: '&copy; OpenStreetMap Contributors',
-                    maxzoom: 19
-                },
-            },
-            layers: [
+            const MyUnderzoom = new Underzoom(
+                maplibregl,
                 {
-                    id: 'rgb',
-                    type: 'raster',
-                    source: 'rgb'
-                },
-            ]
-        },
-    });
-
-    // Lake Michigan
-    const t_north = 46.11;
-    const t_east = -84.72;
-    const t_south = 41.60;
-    const t_west = -88.05;
-    const t_bounds = [[t_west, t_south], [t_east, t_north]];
-    const t_center = [(t_west + t_east) / 2, (t_north + t_south) / 2]
-    
-    // Amazon River
-    const w_north = 0.71;
-    const w_east = -50.09;
-    const w_south = -5.10;
-    const w_west = -75.10;
-    const w_bounds = [[w_west, w_south], [w_east, w_north]];
-    const w_center = [(w_west + w_east) / 2, (w_north + w_south) / 2]
-
-    // // New York, New York
-    // const w_north = 40.78;
-    // const w_east = -73.81;
-    // const w_south = 40.68;
-    // const w_west = -74.15;
-    // const w_bounds = [[w_west, w_south], [w_east, w_north]];
-    // const w_center = [(w_west + w_east) / 2, (w_north + w_south) / 2]
-
-    // // Amsterdam, Netherlands
-    // const t_north = 52.3676 + 0.5;
-    // const t_east = 4.9041 + 0.25;
-    // const t_south = 52.3676 - 0.5;
-    // const t_west = 4.9041 - 0.25;
-    // const t_bounds = [[t_west, t_south], [t_east, t_north]];
-    // const t_center = [(t_west + t_east) / 2, (t_north + t_south) / 2]
-
-    const bounds_options = {
-        "undefined": {
-            "bounds": undefined, "center": [0, 0]
-        },
-        "wide": {
-            "bounds": w_bounds, "center": w_center
-        },
-        "tall": {
-            "bounds": t_bounds, "center": t_center
-        },
-    }
-
-    const zeroPad = (num, places) => String(num).padStart(places, '0');
-    function setExtendScaleFromUi() {
-        _extend = document.getElementById('extend-viewport-bounds').checked;
-        const extendScale = parseFloat(document.getElementById('extend-scale-slider').value);
-        _extendScalePercent = extendScale;
-        document.getElementById('extend-scale-label').textContent = `Extend scale (${zeroPad(extendScale, 2)}%)`;
-        map.setZoom(wayOut);
-    }
-    function setExtendPanFromUi() {
-        const extendPan = parseFloat(document.getElementById('extend-pan-slider').value);
-        _extendPanPercent = extendPan;
-        document.getElementById('extend-pan-label').textContent = `Extend pan (${zeroPad(extendPan, 2)}%)`;
-        map.resize();
-    }
-    function selectMaxBoundsFromUi() {
-        const option = document.getElementById('max-bounds-select').value;
-        map.setMaxBounds(bounds_options[option].bounds);
-        map.setZoom(wayOut);
-    }
-
-    map.on('load', () => {
-        map.addSource('bounds-wide', {
-            'type': 'geojson',
-            'data': {
-                'type': 'Feature',
-                'properties': {},
-                'geometry': {
-                    'type': 'LineString',
-                    'coordinates': [
-                        [w_west, w_south],
-                        [w_west, w_north],
-                        [w_east, w_north],
-                        [w_east, w_south],
-                        [w_west, w_south],
-                    ]
+                    extendScalePercent: 70,
+                    extendPanPercent: 20
                 }
-            }
-        });
-        map.addLayer({
-            'id': 'bounds-wide',
-            'type': 'line',
-            'source': 'bounds-wide',
-            'paint': {
-                'line-color': '#ff0000',
-                'line-width': 4,
-                'line-offset': -2,
-            }
-        });
-        map.addSource('bounds-tall', {
-            'type': 'geojson',
-            'data': {
-                'type': 'Feature',
-                'properties': {},
-                'geometry': {
-                    'type': 'LineString',
-                    'coordinates': [
-                        [t_west, t_south],
-                        [t_west, t_north],
-                        [t_east, t_north],
-                        [t_east, t_south],
-                        [t_west, t_south],
-                    ]
-                }
-            }
-        });
-        map.addLayer({
-            'id': 'bounds-tall',
-            'type': 'line',
-            'source': 'bounds-tall',
-            'paint': {
-                'line-color': '#ff0000',
-                'line-width': 4,
-                'line-offset': -2,
-            }
-        });
-        document.getElementById('extend-viewport-bounds').addEventListener('change', setExtendScaleFromUi);
-        document.getElementById('extend-scale-slider').addEventListener('input', setExtendScaleFromUi);
-        document.getElementById('extend-pan-slider').addEventListener('input', setExtendPanFromUi);
-        document.getElementById('max-bounds-select').addEventListener('change', selectMaxBoundsFromUi);
-        setExtendScaleFromUi();
-        setExtendPanFromUi();
-        selectMaxBoundsFromUi();
-    });
-</script>
+            );
+
+            const map = new maplibregl.Map({
+                container: 'map',
+                renderWorldCopies: false,
+                transformConstrain: MyUnderzoom.transformConstrain,
+                ...
+            })
+        &#60;/script&#62;
+    &#60;/body&#62;
+    &#60;/html&#62;
+    </pre>
 </body>
 </html>
