@@ -7,7 +7,6 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@5.10.0/dist/maplibre-gl.css' />
     <script src='https://unpkg.com/maplibre-gl@5.10.0/dist/maplibre-gl.js'></script>
-    <script type="module" src='../../src/underzoom.js'></script>
     <style>
         h1 {
             font-size: 1rem;
@@ -39,7 +38,7 @@
 <table id='options' class='listing-group'>
     <tr><th scope="col" colspan="100%">
         <h1>
-            underzoomTransformConstrain (<a href=https://github.com/larsmaxfield/maplibre-xy/tree/main/underzoom target="_top">source</a>)
+            Underzoom.transformConstrain (<a href=https://github.com/larsmaxfield/maplibre-xy/tree/main/src/underzoom target="_top">source</a>)
         </h1>
     </th></tr>
     <tr><td><label for='extend-viewport-bounds'>Extend viewport bounds</label></td><td><input type='checkbox' id='extend-viewport-bounds' checked/></td></tr>
@@ -55,10 +54,11 @@
 </table>
 
 <script type="module">
-    import { Underzoom } from '../../src/index.js'
-    const wayOut = -999;
-
+    import { Underzoom } from '../../src/index.js';  // or '../../src/underzoom.js'
+    
     const myUnderzoom = new Underzoom(maplibregl);
+    
+    const wayOut = -999;
 
     const map = new maplibregl.Map({
         container: 'map',
