@@ -2,9 +2,19 @@
 
 Handy functions for <a href=https://github.com/maplibre/maplibre-gl-js>maplibre-gl-js</a> to improve flat single-copy maps, 'simple' maps, and non-maps like high-resolution images.
 
-See the [features overview](https://larsmaxfield.com/maplibre-xy/) and their individual demos:
+[Install](#install) by pointing to the repo's `/src/index.js` or with NPM: 
 
-- [Underzoom demo](https://larsmaxfield.com/maplibre-xy/examples/underzoom/) - Zoom and pan the map to show the entire bounded area.
+```
+npm install maplibre-xy
+```
+
+[Features](https://larsmaxfield.com/maplibre-xy/) with code examples:
+
+- [Underzoom](#underzoom): Zoom and pan the map to show the entire bounded area - [HTML example](#html-example)
+
+<p align="center">
+<a href="https://larsmaxfield.com/maplibre-xy/examples/underzoom/"><img height="200" width="auto" alt="Underzoom demo with modifiable configuration options scale and pan with different bounds" src="examples/underzoom/preview.png"></a>
+</p>
 
 ## Install
 
@@ -14,7 +24,7 @@ For now, clone the repo or simply copy the `/src` folder contents. Use `/src/ind
 
 Or just copy individual modules (like`/src/underzoom.js`) if you need just that.
 
-Something like:
+For a simple HTML page, this is something like:
 
 ```html
 <!DOCTYPE html>
@@ -32,13 +42,47 @@ Something like:
 </html>
 ```
 
-## Code examples
+## Features
 
 ### Underzoom
 
-Below is a (hopefully) working example, assuming you have the repo's `/src` folder available.
+Let users see the entire bounded area within defined limits of scale and pan with `Underzoom.transformConstrain`. Useful for responsibly showing the whole map when `renderWorldCopies=false`.
 
-The [underzoom demo](https://larsmaxfield.com/maplibre-xy/examples/underzoom/) lets you play around with the configuration options with different bounded areas.
+```js
+import { Underzoom } from './src/index.js';  // or './src/underzoom.js'
+
+const myUnderzoom = new Underzoom(maplibregl);  // Uses default limits
+
+const map = new maplibregl.Map({
+    transformConstrain: myUnderzoom.transformConstrain,
+    ...
+```
+
+#### Customize
+
+You can modify the limits by passing an options object. The [underzoom demo](https://larsmaxfield.com/maplibre-xy/examples/underzoom/) lets you preview the effect of each limit on various bounded areas:
+
+```js
+const underzoomOptions = {
+    // Ratio (0-1) of how you far youcan zoom out
+    // the bounds relative to the viewport size.
+    extendScale: 0.5,  // Default 0.9
+
+    // Ratio (0-1) of how far you can pan beyond
+    // the bounds relative to the distance between
+    // viewport edge and center.
+    extendPan: 1.0,  // Default 0.2
+
+    // Whether to enable or revert to default
+    // Mercator constrain.
+    extend: true  // Default true
+};
+
+const myUnderzoom = new Underzoom(maplibregl, underzoomOptions);
+```
+
+#### HTML example
+Assuming you have the `/src` folder available:
 
 ```html
 <!DOCTYPE html>
