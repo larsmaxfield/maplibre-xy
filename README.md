@@ -2,11 +2,7 @@
 
 Handy functions for <a href=https://github.com/maplibre/maplibre-gl-js>maplibre-gl-js</a> to improve flat single-copy maps, 'simple' maps, and non-maps like high-resolution images.
 
-[Install](#install) by pointing to the repo's `/src/index.js` or with NPM: 
-
-```
-npm install maplibre-xy
-```
+[Install](#install) by pointing to the repo's `/src/index.js` or (soon) with NPM.
 
 [Features](https://larsmaxfield.com/maplibre-xy/) with code examples:
 
