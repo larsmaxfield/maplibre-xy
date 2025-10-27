@@ -1,0 +1,24 @@
+{
+  "name": "maplibre-xy",
+  "version": "1.0.1",
+  "description": "Handy functions for flat, single-copy maps in maplibre-gl-js. Includes a parameterized underzoom transformConstrain.",
+  "keywords": ["underzoom", "overpan", "extend", "maplibre-gl-js", "plugin"],
+  "homepage": "https://github.com/larsmaxfield/maplibre-xy#readme",
+  "bugs": "https://github.com/larsmaxfield/maplibre-xy/issues",
+  "license": "MIT",
+  "author": "Lars Maxfield",
+  "main": "src/index.js",
+  "type": "module",
+  "files": [
+    "src"
+  ],
+  "repository": "github:larsmaxfield/maplibre-xy",
+  "peerDependencies": {
+    "maplibre-gl": "^5.10.0"
+  },
+  "peerDependenciesMeta": {
+    "maplibre-gl": {
+      "optional": true
+    }
+  }
+}
