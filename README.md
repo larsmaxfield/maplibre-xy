@@ -16,12 +16,14 @@ import { Underzoom } from 'https://unpkg.com/maplibre-xy';
 import { Underzoom } from './src/index.js';
 ```
 
-[Features](https://larsmaxfield.com/maplibre-xy/) with code examples:
+[Features](https://larsmaxfield.com/maplibre-xy/) include demos and code examples:
 
-- [Underzoom](#underzoom): Zoom and pan the map to show the entire bounded area - [HTML example](#html-example)
+- [Underzoom](#underzoom): Responsibly zoom and pan to see the entire bounded map area.
 
 <p align="center">
-<a href="https://larsmaxfield.com/maplibre-xy/examples/underzoom/"><img height="200" width="auto" alt="Underzoom demo with modifiable configuration options scale and pan with different bounds" src="examples/underzoom/preview.png"></a>
+    <a href="https://larsmaxfield.com/maplibre-xy/examples/underzoom/">
+        <img height="200" width="auto" alt="Underzoom demo with modifiable configuration options scale and pan with different bounds" src="examples/underzoom/preview.png">
+    </a>
 </p>
 
 ## Install
@@ -59,7 +61,20 @@ Or just copy individual modules (like`/src/underzoom.js`) if you need just need 
 
 ### Underzoom
 
-Let users see the entire bounded area within defined limits by passing `Underzoom.transformConstrain` to the Map constructor's `transformConstrain` option:
+Let users see the entire bounded area regardless of viewport aspect ratio.
+
+<p align="center">
+    <a href="https://larsmaxfield.com/maplibre-xy/examples/underzoom/">
+        <img height="200" width="auto" alt="Underzoom demo with modifiable configuration options scale and pan with different bounds" src="examples/underzoom/preview.png">
+    </a>
+</p>
+<p align="center">
+    <a href="https://larsmaxfield.com/maplibre-xy/examples/underzoom/">
+        Demo
+    </a>
+</p>
+
+Simply create an `Underzoom` instance and pass its `transformConstrain` to the Map constructor's `transformConstrain` option:
 
 ```js
 import { Underzoom } from 'maplibre-xy';  // NPM
@@ -73,7 +88,7 @@ const map = new maplibregl.Map({
     ...
 ```
 
-This is especially useful for responsibly showing the whole map when `renderWorldCopies=false`.
+This is especially useful when `renderWorldCopies=false` to show the whole map on both mobile (a tall viewport) and desktop (a wide viewport). MapLibre's default transform doesn't allow this.
 
 #### Customize
 
