@@ -1,6 +1,6 @@
 # maplibre-xy
 
-Utilities for <a href=https://github.com/maplibre/maplibre-gl-js>maplibre-gl-js</a> to improve flat single-copy maps, 'simple' maps, and non-maps like high-resolution image tilesets.
+Utilities for <a href=https://github.com/maplibre/maplibre-gl-js>maplibre-gl-js</a> to improve flat single-copy maps and non-maps like high-resolution image tilesets.
 
 <p align="center">
     <a href="https://larsmaxfield.com/maplibre-xy/examples/underzoom/">
