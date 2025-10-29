@@ -31,10 +31,9 @@
         maplibre-xy
     </h1>
     <p>
-        Handy functions for <a href=https://github.com/maplibre/maplibre-gl-js>maplibre-gl-js</a> to improve flat single-copy maps, 'simple' maps, and non-maps like high-resolution images.
-    </p>
+        Utilities for <a href=https://github.com/maplibre/maplibre-gl-js>maplibre-gl-js</a> to improve flat single-copy maps, 'simple' maps, and non-maps like high-resolution image tilesets.
     <p class="h-caption">
-        Source on <a href=https://github.com/larsmaxfield/maplibre-xy>GitHub</a>.
+        <a href=https://github.com/larsmaxfield/maplibre-xy>Source on GitHub</a> with install instructions and examples.
     <p>
 
     <h2>
@@ -47,35 +46,17 @@
         height="400"
         src="./examples/underzoom/">
     </iframe>
-    <p class="iframe-caption">View the entire bounded map by extending the zoom and pan with <code>Underzoom.transformConstrain</code>.</p>
+    <p class="iframe-caption">View the entire bounded map by extending the zoom and pan with <a href="https://github.com/larsmaxfield/maplibre-xy#underzoom"><code>Underzoom.transformConstrain</code></a>.</p>
     <pre>
-    &#60;!DOCTYPE html&#62;
-    ...
-    &#60;head&#62;
+    import { Underzoom } from 'maplibre-xy';  // npm i maplibre-xy
+    import { Underzoom } from 'https://unpkg.com/maplibre-xy';  // CDN
+
+    const myUnderzoom = new Underzoom(maplibregl);
+
+    const map = new maplibregl.Map({
+        transformConstrain: myUnderzoom.transformConstrain,
         ...
-        &#60;script src='https://unpkg.com/maplibre-gl@5.10.0/dist/maplibre-gl.js'&#62;&#60;/script&#62;
-    &#60;/head&#62;
-    &#60;body&#62;
-        &#60;script type="module"&#62;
-            import { Underzoom } from './src/index.js';  // or './src/underzoom.js'
-
-            const MyUnderzoom = new Underzoom(
-                maplibregl,
-                {
-                    extendScalePercent: 70,
-                    extendPanPercent: 20
-                }
-            );
-
-            const map = new maplibregl.Map({
-                container: 'map',
-                renderWorldCopies: false,
-                transformConstrain: MyUnderzoom.transformConstrain,
-                ...
-            })
-        &#60;/script&#62;
-    &#60;/body&#62;
-    &#60;/html&#62;
+    });
     </pre>
 </body>
 </html>

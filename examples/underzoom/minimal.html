@@ -19,11 +19,12 @@
 <div id='map'></div>
 
 <script type="module">
-    import { Underzoom } from '../../src/index.js';  // or '../../src/underzoom.js'
+    import { Underzoom } from 'https://unpkg.com/maplibre-xy';
     // or
-    // import { Underzoom } from 'https://unpkg.com/maplibre-xy';
+    // import { Underzoom } from '.src/index.js';
+    // import { Underzoom } from 'maplibre-xy';
     
-    const myUnderzoom = new Underzoom(maplibregl, { extendScale: 0.5, extendPan: 1.0 });
+    const myUnderzoom = new Underzoom(maplibregl);
 
     const map = new maplibregl.Map({
         container: 'map',
