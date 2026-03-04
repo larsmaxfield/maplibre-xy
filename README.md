@@ -1,5 +1,11 @@
 # maplibre-xy
 
+![NPM Downloads](https://img.shields.io/npm/dy/maplibre-xy)
+
+```bash
+npm install maplibre-xy
+```
+
 Utilities for <a href=https://github.com/maplibre/maplibre-gl-js>maplibre-gl-js</a> to improve flat single-copy maps and non-maps like high-resolution image tilesets.
 
 <p align="center">
@@ -25,7 +31,7 @@ See the [features preview](https://larsmaxfield.com/maplibre-xy/) on the homepag
 
 ## Install
 
-With NPM:
+With [NPM](https://www.npmjs.com/package/maplibre-xy):
 
 ```bash
 npm install maplibre-xy
