@@ -5,8 +5,7 @@
     <meta property='og:description' content='Underzoom and overpan with a custom map transform' />
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@5.10.0/dist/maplibre-gl.css' />
-    <script src='https://unpkg.com/maplibre-gl@5.10.0/dist/maplibre-gl.js'></script>
+    <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@^6.2.0/dist/maplibre-gl.css' />
     <style>
         h1 {
             font-size: 1rem;
@@ -55,6 +54,7 @@
 
 <script type="module">
     import { Underzoom } from '../../src/index.js';  // or '../../src/underzoom.js'
+    import * as maplibregl from 'https://unpkg.com/maplibre-gl@^6.2.0/dist/maplibre-gl.mjs';
     
     const myUnderzoom = new Underzoom(maplibregl);
     
